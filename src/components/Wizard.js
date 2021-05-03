@@ -24,7 +24,7 @@ const backgroundShape = require("../images/shape.svg");
 const numeral = require("numeral");
 numeral.defaultFormat("0,000");
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.primary["A100"],
@@ -34,66 +34,66 @@ const styles = theme => ({
     backgroundPosition: "0 400px",
     marginTop: 10,
     padding: 20,
-    paddingBottom: 200
+    paddingBottom: 200,
   },
   grid: {
-    margin: `0 ${theme.spacing(2)}px`
+    margin: `0 ${theme.spacing(2)}px`,
   },
   smallContainer: {
-    width: "60%"
+    width: "60%",
   },
   bigContainer: {
-    width: "80%"
+    width: "80%",
   },
   stepContainer: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   stepGrid: {
-    width: "80%"
+    width: "80%",
   },
   backButton: {
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
   },
   outlinedButtom: {
     textTransform: "uppercase",
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   stepper: {
-    backgroundColor: "transparent"
+    backgroundColor: "transparent",
   },
   paper: {
     padding: theme.spacing(3),
     textAlign: "left",
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
   },
   topInfo: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 42
+    marginBottom: 42,
   },
   formControl: {
-    width: "100%"
+    width: "100%",
   },
   selectEmpty: {
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(2),
   },
   borderColumn: {
     borderBottom: `1px solid ${theme.palette.grey["100"]}`,
     paddingBottom: 24,
-    marginBottom: 24
+    marginBottom: 24,
   },
   flexBar: {
     marginTop: 32,
     display: "flex",
-    justifyContent: "center"
-  }
+    justifyContent: "center",
+  },
 });
 
 const getSteps = () => {
-  return ["Info", "Bank", "Loan details", "Terms", "Confirm", "Done"];
+  return ["Dock", "Seal/Shelter", "Freight", "Terms", "Confirm", "Done"];
 };
 
 class Wizard extends Component {
@@ -102,34 +102,35 @@ class Wizard extends Component {
     receivingAccount: "Home Account",
     repaimentAccount: "Saving Account",
     termsChecked: false,
-    labelWidth: 0
+    labelWidth: 0,
+    dockValue: "-",
   };
 
   componentDidMount() {}
 
   handleNext = () => {
-    this.setState(state => ({
-      activeStep: state.activeStep + 1
+    this.setState((state) => ({
+      activeStep: state.activeStep + 1,
     }));
   };
 
   handleBack = () => {
-    this.setState(state => ({
-      activeStep: state.activeStep - 1
+    this.setState((state) => ({
+      activeStep: state.activeStep - 1,
     }));
   };
 
   handleReset = () => {
     this.setState({
-      activeStep: 0
+      activeStep: 0,
     });
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  handleTerms = event => {
+  handleTerms = (event) => {
     this.setState({ termsChecked: event.target.checked });
   };
 
@@ -146,12 +147,12 @@ class Wizard extends Component {
     return "Next";
   }
 
-  goToDashboard = event => {
+  goToDashboard = (event) => {
     const queryString = this.props.location.search;
 
     this.props.history.push({
       pathname: "/dashboard",
-      search: queryString
+      search: queryString,
     });
   };
 
@@ -183,7 +184,7 @@ class Wizard extends Component {
                       activeStep={activeStep}
                       alternativeLabel
                     >
-                      {steps.map(label => {
+                      {steps.map((label) => {
                         return (
                           <Step key={label}>
                             <StepLabel>{label}</StepLabel>
@@ -202,13 +203,13 @@ class Wizard extends Component {
                               style={{ fontWeight: "bold" }}
                               gutterBottom
                             >
-                              Information
+                              Dock Leveller
                             </Typography>
                             <Typography variant="body1" gutterBottom>
-                              General information about the service
+                              Select Dock and customize
                             </Typography>
                           </div>
-                          <div>
+                          {/* <div>
                             <Button
                               variant="outlined"
                               size="large"
@@ -216,9 +217,115 @@ class Wizard extends Component {
                             >
                               Edit
                             </Button>
-                          </div>
+                          </div> */}
                         </div>
+
                         <Grid item container xs={12}>
+                          <Grid item xs={3}>
+                            <Typography variant="h5" gutterBottom>
+                              Dock Model
+                            </Typography>
+                          </Grid>
+
+                          <Grid item xs={6}>
+                            <FormControl
+                              variant="outlined"
+                              className={classes.formControl}
+                            >
+                              <Select
+                                value={this.state.dockModel}
+                                onChange={this.handleChange}
+                                input={
+                                  <OutlinedInput
+                                    labelWidth={this.state.labelWidth}
+                                    name="dockModel"
+                                  />
+                                }
+                              >
+                                <MenuItem value="">
+                                  <em></em>
+                                </MenuItem>
+                                <MenuItem value={"$6050.00"}>
+                                  H7008S, SP1, 480/3/60 - 1
+                                </MenuItem>
+                                <MenuItem value={"$6050.10"}>
+                                  H7008S, SP1, 480/3/60 - 2
+                                </MenuItem>
+                                <MenuItem value={"$6050.20"}>
+                                  H7008S, SP1, 480/3/60 - 3
+                                </MenuItem>
+                              </Select>
+                            </FormControl>
+                          </Grid>
+                          <Grid item xs={3}>
+                            <Typography
+                              style={{
+                                textTransform: "uppercase",
+                                textAlign: "right",
+                                paddingRight: 20,
+                                paddingTop: 10,
+                              }}
+                              color="secondary"
+                            >
+                              <div id="dock-line_price">{this.state.dockModel}</div>
+                            </Typography>
+                          </Grid>
+                        </Grid>
+
+                        <Grid item container xs={12}>
+                          <Grid item xs={3}>
+                            <Typography variant="h5" gutterBottom>
+                              Lip Option
+                            </Typography>
+                          </Grid>
+
+                          <Grid item xs={6}>
+                            <FormControl
+                              variant="outlined"
+                              className={classes.formControl}
+                            >
+                              <Select
+                                value={this.state.lipOption}
+                                onChange={this.handleChange}
+                                input={
+                                  <OutlinedInput
+                                    labelWidth={this.state.labelWidth}
+                                    name="lipOption"
+                                  />
+                                }
+                              >
+                                <MenuItem value="">
+                                  <em></em>
+                                </MenuItem>
+                                <MenuItem value={"$0.00"}>
+                                  14"
+                                </MenuItem>
+                                <MenuItem value={"$217.00"}>
+                                  18"
+                                </MenuItem>
+                                <MenuItem value={"$297.00"}>
+                                  20"
+                                </MenuItem>
+                              </Select>
+                            </FormControl>
+                          </Grid>
+
+                          <Grid item xs={3}>
+                            <Typography
+                              style={{
+                                textTransform: "uppercase",
+                                textAlign: "right",
+                                paddingRight: 20,
+                                paddingTop: 10,
+                              }}
+                              color="secondary"
+                            >
+                              {this.state.lipOption}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+
+                        {/* <Grid item container xs={12}>
                           <Grid item xs={6}>
                             <Typography
                               style={{ textTransform: "uppercase" }}
@@ -243,7 +350,7 @@ class Wizard extends Component {
                               Tokyo
                             </Typography>
                           </Grid>
-                        </Grid>
+                        </Grid> */}
                       </Paper>
                     </div>
                   )}
@@ -279,7 +386,7 @@ class Wizard extends Component {
                             <Typography
                               style={{
                                 textTransform: "uppercase",
-                                marginBottom: 20
+                                marginBottom: 20,
                               }}
                               color="secondary"
                               gutterBottom
@@ -463,7 +570,7 @@ class Wizard extends Component {
                             <Typography
                               style={{
                                 textTransform: "uppercase",
-                                marginBottom: 20
+                                marginBottom: 20,
                               }}
                               color="secondary"
                               gutterBottom
@@ -525,7 +632,7 @@ class Wizard extends Component {
                             padding: 16,
                             border: "2px solid #ccc",
                             borderRadius: "3px",
-                            overflowY: "scroll"
+                            overflowY: "scroll",
                           }}
                         >
                           <Typography

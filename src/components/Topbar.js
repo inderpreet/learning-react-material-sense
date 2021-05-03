@@ -16,6 +16,8 @@ import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import { Link as MaterialLink } from "@material-ui/core";
 import Menu from "./Menu";
 
+import MenuItem from './MenuItem';
+
 const logo = require("../images/logo.svg");
 
 const styles = theme => ({
@@ -66,7 +68,9 @@ const styles = theme => ({
     float: "right"
   },
   tabContainer: {
-    marginLeft: 32,
+        marginLeft: 32,
+    justifyContent: "flex-end",
+    // alignItems: "right",
     [theme.breakpoints.down("sm")]: {
       display: "none"
     }
@@ -130,14 +134,14 @@ class Topbar extends Component {
                 <Typography variant="h6" color="inherit" noWrap>
                   <Link to="/" className={classes.link}>
                     <img width={20} src={logo} alt="" />
-                    <span className={classes.tagline}>Material Sense</span>
+                    <span className={classes.tagline}>BlueGiant</span>
                   </Link>
                 </Typography>
               </div>
               {!this.props.noTabs && (
                 <React.Fragment>
                   <div className={classes.productLogo}>
-                    <Typography>A material UI Template</Typography>
+                    <Typography>NationCare - Quote Generator</Typography>
                   </div>
                   <div className={classes.iconContainer}>
                     <IconButton
@@ -156,25 +160,27 @@ class Topbar extends Component {
                       onClose={this.mobileMenuClose}
                       onOpen={this.mobileMenuOpen}
                     >
+                       {/* First... The collapsed Menu  */}
                       <AppBar title="Menu" />
                       <List>
                         {Menu.map((item, index) => (
-                          <ListItem
-                            component={item.external ? MaterialLink : Link}
-                            href={item.external ? item.pathname : null}
-                            to={
-                              item.external
-                                ? null
-                                : {
-                                    pathname: item.pathname,
-                                    search: this.props.location.search
-                                  }
-                            }
-                            button
-                            key={item.label}
-                          >
-                            <ListItemText primary={item.label} />
-                          </ListItem>
+                          <MenuItem _item = {item} />
+                          // <ListItem
+                          //   component={item.external ? MaterialLink : Link}
+                          //   href={item.external ? item.pathname : null}
+                          //   to={
+                          //     item.external
+                          //       ? null
+                          //       : {
+                          //           pathname: item.pathname,
+                          //           search: this.props.location.search
+                          //         }
+                          //   }
+                          //   button
+                          //   key={item.label}
+                          // >
+                          //   <ListItemText primary={item.label} />
+                          // </ListItem>
                         ))}
                       </List>
                     </SwipeableDrawer>

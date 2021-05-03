@@ -4,27 +4,26 @@ const Menu = [
     pathname: "/"
   },
   {
-    label: "Dashboard",
+    label: "New Quote wizard",
+    pathname: "/wizard"
+  },
+  {
+    label: "Quote Dashboard",
     pathname: "/dashboard"
   },
   {
     label: "Signup",
     pathname: "/signup"
   },
-  {
-    label: "Wizard",
-    pathname: "/wizard"
-  },
+  
   {
     label: "Cards",
-    pathname: "/cards"
-  },
-  {
-    label: "Github",
-    pathname: "https://github.com/alexanmtz/material-sense",
-    external: true
+    pathname: "/cards",
+    submenu: {
+      label: "sub menu1",
+      pathname: "/submenu1"
+    }
   }
-
 ];
 
 export default Menu;
