@@ -163,8 +163,16 @@ class Topbar extends Component {
                        {/* First... The collapsed Menu  */}
                       <AppBar title="Menu" />
                       <List>
-                        {Menu.map((item, index) => (
-                          <MenuItem _item = {item} />
+                        { Menu.map((item, index) => {
+                          if (item.submenu ==null) {
+                            return <MenuItem _item = {item} />
+                          } else { 
+                            return (
+                              // <MenuItem _item = {item} />
+                              <MenuItem _item = {item.submenu} />
+                            );
+                          }
+                          // item.submenu && <MenuItem _item = {item.submenu} 
                           // <ListItem
                           //   component={item.external ? MaterialLink : Link}
                           //   href={item.external ? item.pathname : null}
@@ -181,7 +189,7 @@ class Topbar extends Component {
                           // >
                           //   <ListItemText primary={item.label} />
                           // </ListItem>
-                        ))}
+                        })}
                       </List>
                     </SwipeableDrawer>
                     <Tabs
