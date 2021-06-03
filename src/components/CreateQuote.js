@@ -1,11 +1,152 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
+import withStyles from "@material-ui/styles/withStyles";
+import { withRouter } from "react-router-dom";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import InstructionDialog from "./dialogs/InstructionDialog";
+import SwipeDialog from "./dialogs/SwipeDialog";
 
-export default class Picker extends Component {
-        render() {
-                return (
-                        <div>
-                                Picker1
-                        </div>
-                )
-        }
+import Topbar from "./Topbar";
+import {
+  Card,
+  CardContent,
+  InputLabel,
+  FormControl,
+  Select,
+  MenuItem,
+} from "@material-ui/core";
+import ItemSelect from "./input/ItemSelect";
+// import Topbar from './Topbar-final';
+
+const backgroundShape = require("../images/shape.svg");
+
+const styles = (theme) => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.grey["100"],
+    overflow: "hidden",
+    background: `url(${backgroundShape}) no-repeat`,
+    backgroundSize: "cover",
+    backgroundPosition: "0 400px",
+    paddingBottom: 200,
+  },
+  card: {
+    width: "90vw",
+    marginTop: 10,
+  },
+  inputbar: {
+    alignItems: "center",
+    marginTop: 5,
+  },
+  formItem: {
+    margin: theme.spacing(1),
+    minWidth: 220,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+  grid: {
+    width: 1200,
+    marginTop: 40,
+    [theme.breakpoints.down("sm")]: {
+      width: "calc(100% - 20px)",
+    },
+  },
+  paper: {
+    padding: theme.spacing(3),
+    textAlign: "left",
+    color: theme.palette.text.secondary,
+  },
+  rangeLabel: {
+    display: "flex",
+    justifyContent: "space-between",
+    paddingTop: theme.spacing(2),
+  },
+  topBar: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 32,
+  },
+  outlinedButtom: {
+    textTransform: "uppercase",
+    margin: theme.spacing(1),
+  },
+  actionButtom: {
+    textTransform: "uppercase",
+    margin: theme.spacing(1),
+    width: 152,
+  },
+  blockCenter: {
+    padding: theme.spacing(2),
+    textAlign: "center",
+  },
+  block: {
+    padding: theme.spacing(2),
+  },
+  box: {
+    marginBottom: 40,
+    height: 65,
+  },
+  inlining: {
+    display: "inline-block",
+    marginRight: 10,
+  },
+  buttonBar: {
+    display: "flex",
+  },
+  alignRight: {
+    display: "flex",
+    justifyContent: "flex-end",
+  },
+  noBorder: {
+    borderBottomStyle: "hidden",
+  },
+  loadingState: {
+    opacity: 0.05,
+  },
+  loadingMessage: {
+    position: "absolute",
+    top: "40%",
+    left: "40%",
+  },
+});
+
+class CreateQuote extends Component {
+  render() {
+    const { classes } = this.props;
+    return (
+      <React.Fragment>
+        <CssBaseline />
+        <Topbar />
+        <div className={classes.root}>
+          <Grid container justify="center">
+            <ItemSelect />
+            {/* <Card className={classes.card}>
+              <CardContent className={classes.inputbar}>
+                <FormControl className={classes.formItem}>
+                  <InputLabel id="item-select">Item</InputLabel>
+                  <Select
+                    labelId="label1"
+                    id="select"
+                    value="test"
+                    //   onChange={handleChange}
+                  >
+                    <MenuItem value={1}> Leveller Model 1</MenuItem>
+                    <MenuItem value={2}> Leveller Model 2</MenuItem>
+                    <MenuItem value={3}> Restraint 1</MenuItem>
+                  </Select>
+                </FormControl>
+              </CardContent>
+            </Card> */}
+          </Grid>
+        </div>
+      </React.Fragment>
+    );
+  }
 }
+
+export default withRouter(withStyles(styles)(CreateQuote));
