@@ -12,18 +12,22 @@ const Menu = [
     pathname: "/dashboard"
   },
   {
-    label: "Signup",
-    pathname: "/signup"
-  },
-  
-  {
-    label: "Cards",
-    pathname: "/cards",
-    submenu: {
-      label: "sub menu1",
-      pathname: "/submenu1"
-    }
+    label: "Start",
+    pathname: "/start"
   }
+  // {
+  //   label: "Signup",
+  //   pathname: "/signup"
+  // },
+  
+  // {
+  //   label: "Cards",
+  //   pathname: "/cards",
+  //   submenu: {
+  //     label: "sub menu1",
+  //     pathname: "/submenu1"
+  //   }
+  // }
 ];
 
 export default Menu;

@@ -138,10 +138,10 @@ class Main extends Component {
                       color="secondary"
                       gutterBottom
                     >
-                      First title
+                      Start Quote
                     </Typography>
                     <Typography variant="body2" gutterBottom>
-                      A first title style <br /> with two lines
+                      Click Here to start a new quote <br /> 
                     </Typography>
                   </div>
                   <div style={{ display: "flex", justifyContent: "flex-end" }}>
@@ -150,7 +150,7 @@ class Main extends Component {
                       variant="contained"
                       className={classes.actionButtom}
                     >
-                      Learn more
+                      Start
                     </Button>
                   </div>
                 </Paper>
@@ -163,10 +163,10 @@ class Main extends Component {
                       color="secondary"
                       gutterBottom
                     >
-                      Another box
+                      Lookup Quote
                     </Typography>
                     <Typography variant="body1" gutterBottom>
-                      A default box
+                      Lookup a previous quote.
                     </Typography>
                   </div>
                   <div style={{ display: "flex", justifyContent: "flex-end" }}>
@@ -175,12 +175,12 @@ class Main extends Component {
                       variant="contained"
                       className={classes.actionButtom}
                     >
-                      Learn more
+                      Lookup
                     </Button>
                   </div>
                 </Paper>
               </Grid>
-              <Grid item xs={12} md={4}>
+              {/* <Grid item xs={12} md={4}>
                 <Paper className={classes.paper}>
                   <div className={classes.box}>
                     <Typography
@@ -213,8 +213,8 @@ class Main extends Component {
                     </Button>
                   </div>
                 </Paper>
-              </Grid>
-              <Grid container item xs={12}>
+              </Grid> */}
+              {/* <Grid container item xs={12}>
                 <Grid item xs={12}>
                   <Paper className={classes.paper}>
                     <div>
@@ -238,7 +238,7 @@ class Main extends Component {
                     </div>
                   </Paper>
                 </Grid>
-              </Grid>
+              </Grid> */}
             </Grid>
           </Grid>
           <SwipeDialog
