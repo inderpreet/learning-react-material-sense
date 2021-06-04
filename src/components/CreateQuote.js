@@ -1,25 +1,20 @@
 import React, { Component } from "react";
+import {
+  Button,
+  Card,
+  Menu,
+  Grid,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Select,
+} from "@material-ui/core";
 import withStyles from "@material-ui/styles/withStyles";
 import { withRouter } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import InstructionDialog from "./dialogs/InstructionDialog";
-import SwipeDialog from "./dialogs/SwipeDialog";
 
 import Topbar from "./Topbar";
-import {
-  Card,
-  CardContent,
-  InputLabel,
-  FormControl,
-  Select,
-  MenuItem,
-} from "@material-ui/core";
-import ItemSelect from "./input/ItemSelect";
-// import Topbar from './Topbar-final';
+import FetchLineItems from "./data/FetchLineItems";
 
 const backgroundShape = require("../images/shape.svg");
 
@@ -33,89 +28,62 @@ const styles = (theme) => ({
     backgroundPosition: "0 400px",
     paddingBottom: 200,
   },
-  card: {
-    width: "90vw",
-    marginTop: 10,
+  formItemSelect: {
+    margin: theme.spacing(2),
+    minWidth: "95vw",
+    padding: 15,
   },
-  inputbar: {
-    alignItems: "center",
-    marginTop: 5,
-  },
-  formItem: {
-    margin: theme.spacing(1),
-    minWidth: 220,
+  itemSelector: {
+    minWidth: 200,
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
-  grid: {
-    width: 1200,
-    marginTop: 40,
-    [theme.breakpoints.down("sm")]: {
-      width: "calc(100% - 20px)",
-    },
-  },
-  paper: {
-    padding: theme.spacing(3),
-    textAlign: "left",
-    color: theme.palette.text.secondary,
-  },
-  rangeLabel: {
-    display: "flex",
-    justifyContent: "space-between",
-    paddingTop: theme.spacing(2),
-  },
-  topBar: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginTop: 32,
-  },
-  outlinedButtom: {
-    textTransform: "uppercase",
-    margin: theme.spacing(1),
-  },
-  actionButtom: {
-    textTransform: "uppercase",
-    margin: theme.spacing(1),
-    width: 152,
-  },
-  blockCenter: {
-    padding: theme.spacing(2),
-    textAlign: "center",
-  },
-  block: {
-    padding: theme.spacing(2),
-  },
-  box: {
-    marginBottom: 40,
-    height: 65,
-  },
-  inlining: {
-    display: "inline-block",
-    marginRight: 10,
-  },
-  buttonBar: {
-    display: "flex",
-  },
-  alignRight: {
-    display: "flex",
-    justifyContent: "flex-end",
-  },
-  noBorder: {
-    borderBottomStyle: "hidden",
-  },
-  loadingState: {
-    opacity: 0.05,
-  },
-  loadingMessage: {
-    position: "absolute",
-    top: "40%",
-    left: "40%",
+  addButton: {
+    margin: theme.spacing(2),
+    fontWeight: "bold",
   },
 });
 
+function ItemList() {
+  return FetchLineItems().map((obj, i) => {
+    return (
+      <MenuItem key={i} value={obj.id}>
+        {obj.name}
+      </MenuItem>
+    );
+  });
+}
+
 class CreateQuote extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      item: "",
+    };
+
+    this.handleAddButton = this.handleAddButton.bind(this);
+    this.handleItemSelect = this.handleItemSelect.bind(this);
+  }
+
+  handleAddButton(event) {
+    console.log("Added " + event.target);
+    if (this.state.item === "") {
+      alert("Please Select Item from Dropdown");
+    } else {
+      alert("Added Item: " + this.state.item);
+    }
+  }
+
+  handleItemSelect(event) {
+    console.log("Added " + event.target);
+    if (this.state.item === "") {
+      alert("Please Select Item from Dropdown");
+    } else {
+      alert("Added Item: " + this.state.item);
+    }
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -124,24 +92,27 @@ class CreateQuote extends Component {
         <Topbar />
         <div className={classes.root}>
           <Grid container justify="center">
-            <ItemSelect />
-            {/* <Card className={classes.card}>
-              <CardContent className={classes.inputbar}>
-                <FormControl className={classes.formItem}>
-                  <InputLabel id="item-select">Item</InputLabel>
-                  <Select
-                    labelId="label1"
-                    id="select"
-                    value="test"
-                    //   onChange={handleChange}
-                  >
-                    <MenuItem value={1}> Leveller Model 1</MenuItem>
-                    <MenuItem value={2}> Leveller Model 2</MenuItem>
-                    <MenuItem value={3}> Restraint 1</MenuItem>
-                  </Select>
-                </FormControl>
-              </CardContent>
-            </Card> */}
+            <Card className={classes.formItemSelect}>
+              <FormControl className={classes.itemSelector}>
+                <InputLabel id="item-select-label">Item</InputLabel>
+                <Select
+                  labelId="item-select-label"
+                  id="item-select"
+                  value={this.item}
+                  onChange={this.handleItemSelect}
+                >
+                  {ItemList()}
+                </Select>
+              </FormControl>
+              <Button
+                className={classes.addButton}
+                variant="contained"
+                color="primary"
+                onClick={this.handleAddButton}
+              >
+                +
+              </Button>
+            </Card>
           </Grid>
         </div>
       </React.Fragment>
