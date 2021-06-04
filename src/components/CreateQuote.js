@@ -15,7 +15,6 @@ import {
   TableCell,
   TableBody,
   Checkbox,
-  Box,
   TextField,
 } from "@material-ui/core";
 import withStyles from "@material-ui/styles/withStyles";
@@ -66,6 +65,10 @@ const styles = (theme) => ({
     display: "inline",
     innerHeight: 10,
   },
+  rightAlign: {
+    margin: theme.spacing(2),
+    fontWeight: "bold",
+  },
 });
 
 function ItemList(priceList) {
@@ -102,6 +105,7 @@ class CreateQuote extends Component {
 
     this.handleAddButton = this.handleAddButton.bind(this);
     this.handleItemSelect = this.handleItemSelect.bind(this);
+    this.handleItemDelete = this.handleItemDelete.bind(this);
   }
 
   componentDidMount() {
@@ -143,7 +147,16 @@ class CreateQuote extends Component {
     // }
 
     console.log("Value of item: ");
-    console.log(this.state.item);
+    console.log(this.state.quoteList);
+  }
+
+  handleItemDelete(event) {
+    const i = event.target.value;
+    console.log("Item Deleted");
+    console.log(i);
+    let list = this.state.quoteList;
+    list.splice(i, 1);
+    this.setState({ quoteList: list });
   }
 
   render() {
@@ -203,18 +216,10 @@ class CreateQuote extends Component {
                 color="primary"
                 onClick={this.handleAddButton}
               >
-                +
+                Add to Quote
               </Button>
             </Card>
             <Card className={classes.formItemSelect}>
-              <Button
-                className={classes.addButton}
-                variant="contained"
-                color="secondary"
-                // onClick={this.handleAddButton}
-              >
-                Save to Database
-              </Button>
               <form className={classes.quoteId} noValidate autoComplete="off">
                 <TextField
                   display="inline"
@@ -223,13 +228,22 @@ class CreateQuote extends Component {
                   variant="filled"
                 />
               </form>
+
+              <Button
+                className={classes.rightAlign}
+                variant="contained"
+                color="secondary"
+                // onClick={this.handleAddButton}
+              >
+                Save to Database
+              </Button>
             </Card>
             {/* Item List */}
             <TableContainer component={Paper} className={classes.tableStyle}>
               <Table className={classes.tableStyle} aria-label="Quote">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Select</TableCell>
+                    <TableCell>Delete</TableCell>
                     <TableCell align="left">ID</TableCell>
                     <TableCell align="left">Item Name</TableCell>
                     <TableCell align="left">Price</TableCell>
@@ -240,7 +254,11 @@ class CreateQuote extends Component {
                   {this.state.quoteList.map((row, i) => (
                     <TableRow key={i}>
                       <TableCell align="left">
-                        <Checkbox color="primary" />
+                        <Checkbox
+                          color="primary"
+                          onChange={this.handleItemDelete}
+                          value={i}
+                        />
                       </TableCell>
                       <TableCell component="th" scope="row">
                         {row.id}
