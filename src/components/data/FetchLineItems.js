@@ -1,6 +1,12 @@
 export default function FetchLineItems() {
   return [
     {
+      id: 0,
+      name: "Select Item",
+      price_cad: 0.0,
+      description: "blank",
+    },
+    {
       id: 1,
       name: "Leveller1",
       price_cad: 4032,

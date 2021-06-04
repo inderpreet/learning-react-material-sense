@@ -15,6 +15,7 @@ import {
   TableCell,
   TableBody,
   Checkbox,
+  Typography,
 } from "@material-ui/core";
 import withStyles from "@material-ui/styles/withStyles";
 import { withRouter } from "react-router-dom";
@@ -57,8 +58,8 @@ const styles = (theme) => ({
   },
 });
 
-function ItemList() {
-  return FetchLineItems().map((obj, i) => {
+function ItemList(priceList) {
+  return priceList.map((obj, i) => {
     return (
       <MenuItem key={i} value={obj}>
         {obj.name}
@@ -71,6 +72,7 @@ class CreateQuote extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      seconds: 1,
       item: {
         id: 0,
         name: "Select Item",
@@ -85,11 +87,27 @@ class CreateQuote extends Component {
           description: "Test Line Item",
         },
       ],
+      priceList: [],
     };
 
     this.handleAddButton = this.handleAddButton.bind(this);
     this.handleItemSelect = this.handleItemSelect.bind(this);
   }
+
+  componentDidMount() {
+    const priceList = FetchLineItems();
+    // then
+    this.setState({ priceList: priceList });
+  }
+  // componentDidMount() {
+  //   this.timer = setInterval(() => {
+  //     this.setState({ seconds: this.state.seconds + 1 });
+  //   }, 1000);
+  // }
+
+  // componentWillUnmount() {
+  //   clearInterval(this.timer);
+  // }
 
   handleAddButton(event) {
     console.log("Added " + event.target);
@@ -101,13 +119,19 @@ class CreateQuote extends Component {
   }
 
   handleItemSelect(event) {
+    this.setState({ item: event.target.value });
+    // this.state.item = event.target.value;
     console.log("Added ");
-    console.log(event.target);
+    console.log(event.target.value);
+
     if (event.target === {}) {
       alert("Please Select Item from Dropdown");
     } else {
       alert("Added Item: " + JSON.stringify(event.target.value));
     }
+
+    console.log("Value of item: ");
+    console.log(this.state.item);
   }
 
   render() {
@@ -128,7 +152,7 @@ class CreateQuote extends Component {
                   value=""
                   onChange={this.handleItemSelect}
                 >
-                  {ItemList()}
+                  {ItemList(this.state.priceList)}
                 </Select>
               </FormControl>
               <Button
@@ -139,6 +163,10 @@ class CreateQuote extends Component {
               >
                 +
               </Button>
+              <Typography id="itempriceform" variant="overline">
+                {this.state.item.name}
+                {/* {this.state.seconds} */}
+              </Typography>
             </Card>
             {/* Item List */}
             <TableContainer component={Paper} className={classes.tableStyle}>
