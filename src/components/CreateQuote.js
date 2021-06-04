@@ -14,6 +14,7 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  Checkbox,
 } from "@material-ui/core";
 import withStyles from "@material-ui/styles/withStyles";
 import { withRouter } from "react-router-dom";
@@ -145,21 +146,23 @@ class CreateQuote extends Component {
                 <TableHead>
                   <TableRow>
                     <TableCell>Select</TableCell>
-                    <TableCell align="right">ID</TableCell>
-                    <TableCell align="right">Item Name</TableCell>
-                    <TableCell align="right">Price</TableCell>
+                    <TableCell align="left">ID</TableCell>
+                    <TableCell align="left">Item Name</TableCell>
+                    <TableCell align="left">Price</TableCell>
                     <TableCell align="right">Currency</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {this.state.quoteList.map((row) => (
                     <TableRow key={row.id}>
-                      <TableCell align="right">[]</TableCell>
+                      <TableCell align="left">
+                        <Checkbox color="primary" />
+                      </TableCell>
                       <TableCell component="th" scope="row">
                         {row.id}
                       </TableCell>
-                      <TableCell align="right">{row.name}</TableCell>
-                      <TableCell align="right">{row.price}</TableCell>
+                      <TableCell align="left">{row.name}</TableCell>
+                      <TableCell align="left">{row.price}</TableCell>
                       <TableCell align="right">CAD</TableCell>
                     </TableRow>
                   ))}
