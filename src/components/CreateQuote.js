@@ -15,7 +15,8 @@ import {
   TableCell,
   TableBody,
   Checkbox,
-  Typography,
+  Box,
+  TextField,
 } from "@material-ui/core";
 import withStyles from "@material-ui/styles/withStyles";
 import { withRouter } from "react-router-dom";
@@ -23,6 +24,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 
 import Topbar from "./Topbar";
 import FetchLineItems from "./data/FetchLineItems";
+import { InfoOutlined } from "@material-ui/icons";
 
 const backgroundShape = require("../images/shape.svg");
 
@@ -44,6 +46,10 @@ const styles = (theme) => ({
   itemSelector: {
     minWidth: 200,
   },
+  selected: {
+    marginBottom: 12,
+    marginTop: theme.spacing(2),
+  },
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
@@ -55,6 +61,10 @@ const styles = (theme) => ({
     minWidth: 650,
     // margin: 20,
     width: "95vw",
+  },
+  quoteId: {
+    display: "inline",
+    innerHeight: 10,
   },
 });
 
@@ -110,11 +120,13 @@ class CreateQuote extends Component {
   // }
 
   handleAddButton(event) {
-    console.log("Added " + event.target);
-    if (this.state.item === "") {
+    if (this.state.item.id === 0) {
       alert("Please Select Item from Dropdown");
     } else {
-      alert("Added Item: " + this.state.item);
+      // alert("Added Item: " + JSON.stringify(this.state.item));
+      let list = this.state.quoteList;
+      list.push(this.state.item);
+      this.setState({ quoteList: list });
     }
   }
 
@@ -124,11 +136,11 @@ class CreateQuote extends Component {
     console.log("Added ");
     console.log(event.target.value);
 
-    if (event.target === {}) {
-      alert("Please Select Item from Dropdown");
-    } else {
-      alert("Added Item: " + JSON.stringify(event.target.value));
-    }
+    // if (event.target === {}) {
+    //   alert("Please Select Item from Dropdown");
+    // } else {
+    //   alert("Added Item: " + JSON.stringify(event.target.value));
+    // }
 
     console.log("Value of item: ");
     console.log(this.state.item);
@@ -155,6 +167,36 @@ class CreateQuote extends Component {
                   {ItemList(this.state.priceList)}
                 </Select>
               </FormControl>
+              <TextField
+                className={classes.addButton}
+                id="item-id"
+                label="ID"
+                value={this.state.item.id}
+                InputProps={{
+                  readOnly: true,
+                }}
+                variant="outlined"
+              />
+              <TextField
+                className={classes.addButton}
+                id="item-name"
+                label="Name"
+                value={this.state.item.name}
+                InputProps={{
+                  readOnly: true,
+                }}
+                variant="outlined"
+              />
+              <TextField
+                className={classes.addButton}
+                id="item-price"
+                label="Price"
+                value={this.state.item.price_cad}
+                InputProps={{
+                  readOnly: true,
+                }}
+                variant="outlined"
+              />
               <Button
                 className={classes.addButton}
                 variant="contained"
@@ -163,10 +205,24 @@ class CreateQuote extends Component {
               >
                 +
               </Button>
-              <Typography id="itempriceform" variant="overline">
-                {this.state.item.name}
-                {/* {this.state.seconds} */}
-              </Typography>
+            </Card>
+            <Card className={classes.formItemSelect}>
+              <Button
+                className={classes.addButton}
+                variant="contained"
+                color="secondary"
+                // onClick={this.handleAddButton}
+              >
+                Save to Database
+              </Button>
+              <form className={classes.quoteId} noValidate autoComplete="off">
+                <TextField
+                  display="inline"
+                  id="filled-basic"
+                  label="QuoteID"
+                  variant="filled"
+                />
+              </form>
             </Card>
             {/* Item List */}
             <TableContainer component={Paper} className={classes.tableStyle}>
@@ -181,8 +237,8 @@ class CreateQuote extends Component {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {this.state.quoteList.map((row) => (
-                    <TableRow key={row.id}>
+                  {this.state.quoteList.map((row, i) => (
+                    <TableRow key={i}>
                       <TableCell align="left">
                         <Checkbox color="primary" />
                       </TableCell>
@@ -190,7 +246,7 @@ class CreateQuote extends Component {
                         {row.id}
                       </TableCell>
                       <TableCell align="left">{row.name}</TableCell>
-                      <TableCell align="left">{row.price}</TableCell>
+                      <TableCell align="left">{row.price_cad}</TableCell>
                       <TableCell align="right">CAD</TableCell>
                     </TableRow>
                   ))}
