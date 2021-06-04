@@ -2,12 +2,18 @@ import React, { Component } from "react";
 import {
   Button,
   Card,
-  Menu,
   Grid,
   MenuItem,
   FormControl,
   InputLabel,
   Select,
+  Table,
+  Paper,
+  TableHead,
+  TableContainer,
+  TableRow,
+  TableCell,
+  TableBody,
 } from "@material-ui/core";
 import withStyles from "@material-ui/styles/withStyles";
 import { withRouter } from "react-router-dom";
@@ -26,7 +32,7 @@ const styles = (theme) => ({
     background: `url(${backgroundShape}) no-repeat`,
     backgroundSize: "cover",
     backgroundPosition: "0 400px",
-    paddingBottom: 200,
+    paddingBottom: 30,
   },
   formItemSelect: {
     margin: theme.spacing(2),
@@ -43,12 +49,17 @@ const styles = (theme) => ({
     margin: theme.spacing(2),
     fontWeight: "bold",
   },
+  tableStyle: {
+    minWidth: 650,
+    // margin: 20,
+    width: "95vw",
+  },
 });
 
 function ItemList() {
   return FetchLineItems().map((obj, i) => {
     return (
-      <MenuItem key={i} value={obj.id}>
+      <MenuItem key={i} value={obj}>
         {obj.name}
       </MenuItem>
     );
@@ -59,7 +70,20 @@ class CreateQuote extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      item: "",
+      item: {
+        id: 0,
+        name: "Select Item",
+        price_cad: 0.0,
+        description: "blank",
+      },
+      quoteList: [
+        {
+          id: 123456,
+          name: "Leveller2",
+          price_cad: 4096,
+          description: "Test Line Item",
+        },
+      ],
     };
 
     this.handleAddButton = this.handleAddButton.bind(this);
@@ -76,11 +100,12 @@ class CreateQuote extends Component {
   }
 
   handleItemSelect(event) {
-    console.log("Added " + event.target);
-    if (this.state.item === "") {
+    console.log("Added ");
+    console.log(event.target);
+    if (event.target === {}) {
       alert("Please Select Item from Dropdown");
     } else {
-      alert("Added Item: " + this.state.item);
+      alert("Added Item: " + JSON.stringify(event.target.value));
     }
   }
 
@@ -92,13 +117,14 @@ class CreateQuote extends Component {
         <Topbar />
         <div className={classes.root}>
           <Grid container justify="center">
+            {/* InputForm */}
             <Card className={classes.formItemSelect}>
               <FormControl className={classes.itemSelector}>
                 <InputLabel id="item-select-label">Item</InputLabel>
                 <Select
                   labelId="item-select-label"
                   id="item-select"
-                  value={this.item}
+                  value=""
                   onChange={this.handleItemSelect}
                 >
                   {ItemList()}
@@ -113,6 +139,33 @@ class CreateQuote extends Component {
                 +
               </Button>
             </Card>
+            {/* Item List */}
+            <TableContainer component={Paper} className={classes.tableStyle}>
+              <Table className={classes.tableStyle} aria-label="Quote">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Select</TableCell>
+                    <TableCell align="right">ID</TableCell>
+                    <TableCell align="right">Item Name</TableCell>
+                    <TableCell align="right">Price</TableCell>
+                    <TableCell align="right">Currency</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {this.state.quoteList.map((row) => (
+                    <TableRow key={row.id}>
+                      <TableCell align="right">[]</TableCell>
+                      <TableCell component="th" scope="row">
+                        {row.id}
+                      </TableCell>
+                      <TableCell align="right">{row.name}</TableCell>
+                      <TableCell align="right">{row.price}</TableCell>
+                      <TableCell align="right">CAD</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
           </Grid>
         </div>
       </React.Fragment>
