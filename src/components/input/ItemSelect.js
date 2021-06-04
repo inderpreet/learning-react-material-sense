@@ -6,6 +6,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import { render } from "react-dom";
+import FetchLineItems from "../data/FetchLineItems";
 
 const useStyles = makeStyles((theme) => ({
   formItemSelect: {
@@ -24,6 +26,16 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
   },
 }));
+
+function ItemList() {
+  return FetchLineItems().map((obj, i) => {
+    return (
+      <MenuItem key={i} value={obj.id}>
+        {obj.name}
+      </MenuItem>
+    );
+  });
+}
 
 export default function ItemSelect() {
   const classes = useStyles();
@@ -53,9 +65,10 @@ export default function ItemSelect() {
             value={item}
             onChange={handleItemSelect}
           >
-            <MenuItem value={"test"}>Leveller 1</MenuItem>
+            {ItemList()}
+            {/* <MenuItem value={"test"}>Leveller 1</MenuItem>
             <MenuItem value={20}>Leveller 2</MenuItem>
-            <MenuItem value={30}>Restraint 1</MenuItem>
+            <MenuItem value={30}>Restraint 1</MenuItem> */}
           </Select>
         </FormControl>
         <Button
