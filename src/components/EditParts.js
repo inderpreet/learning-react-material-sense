@@ -106,6 +106,16 @@ class EditParts extends Component {
         },
       ],
       priceList: [],
+      partDesc: [],
+      currentPart: {
+        _id: 1,
+        modelcode: "",
+        modelcodetext: "",
+        desc: "",
+        brand: "",
+        model: "",
+        capacity: "",
+      },
     };
 
     this.handleAddButton = this.handleAddButton.bind(this);
@@ -114,9 +124,10 @@ class EditParts extends Component {
   }
 
   componentDidMount() {
-    const priceList = FetchItemDesc();
+    const partDesc = FetchItemDesc();
     // then
-    this.setState({ priceList: priceList });
+    this.setState({ partDesc: partDesc });
+    console.log(partDesc);
   }
   // componentDidMount() {
   //   this.timer = setInterval(() => {
@@ -140,7 +151,7 @@ class EditParts extends Component {
   }
 
   handleItemSelect(event) {
-    this.setState({ item: event.target.value });
+    this.setState({ currentPart: event.target.value });
     // this.state.item = event.target.value;
     console.log("Added ");
     console.log(event.target.value);
@@ -182,7 +193,11 @@ class EditParts extends Component {
                   value=""
                   onChange={this.handleItemSelect}
                 >
-                  {ItemList(this.state.priceList)}
+                  {this.state.partDesc.map((obj, i) => (
+                    <MenuItem key={i} value={obj}>
+                      {obj.modelcode}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
               <div>
@@ -190,7 +205,7 @@ class EditParts extends Component {
                   className={classes.addButton}
                   id="item-id"
                   label="ID"
-                  value={this.state.item.id}
+                  value={this.state.currentPart._id}
                   InputProps={{
                     readOnly: true,
                   }}
@@ -199,8 +214,48 @@ class EditParts extends Component {
                 <TextField
                   className={classes.addButton}
                   id="item-name"
-                  label="Name"
-                  value={this.state.item.name}
+                  label="Model Code"
+                  value={this.state.currentPart.modelcode}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  variant="outlined"
+                />
+                <TextField
+                  className={classes.addButton}
+                  id="item-name"
+                  label="Model Code Text"
+                  value={this.state.currentPart.modelcodetext}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  variant="outlined"
+                />
+                <TextField
+                  className={classes.addButton}
+                  id="item-name"
+                  label="Brand"
+                  value={this.state.currentPart.brand}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  variant="outlined"
+                />
+                <TextField
+                  className={classes.addButton}
+                  id="item-name"
+                  label="Model"
+                  value={this.state.currentPart.model}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  variant="outlined"
+                />
+                <TextField
+                  className={classes.addButton}
+                  id="item-name"
+                  label="Capacity"
+                  value={this.state.currentPart.capacity}
                   InputProps={{
                     readOnly: true,
                   }}
@@ -213,7 +268,7 @@ class EditParts extends Component {
                 multiline="true"
                 id="item-description"
                 label="Description"
-                defaultValue={this.state.item.price_cad}
+                defaultValue={this.state.currentPart.desc}
                 // InputProps={{
                 //   readOnly: true,
                 // }}
@@ -252,7 +307,7 @@ class EditParts extends Component {
                   <TableRow>
                     <TableCell>Delete</TableCell>
                     <TableCell align="left">ID</TableCell>
-                    <TableCell align="left">Item Name</TableCell>
+                    {/* <TableCell align="left">Item Name</TableCell> */}
                     <TableCell align="left">Model Code</TableCell>
                     <TableCell align="left">Model Code Text</TableCell>
                     <TableCell align="left">Brand</TableCell>
@@ -261,7 +316,7 @@ class EditParts extends Component {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {this.state.quoteList.map((row, i) => (
+                  {this.state.partDesc.map((row, i) => (
                     <TableRow key={i}>
                       <TableCell align="left">
                         <Checkbox
@@ -271,10 +326,14 @@ class EditParts extends Component {
                         />
                       </TableCell>
                       <TableCell component="th" scope="row">
-                        {row.id}
+                        {row._id}
                       </TableCell>
-                      <TableCell align="left">{row.name}</TableCell>
-                      <TableCell align="left">{row.price_cad}</TableCell>
+                      {/* <TableCell align="left">NAME</TableCell> */}
+                      <TableCell align="left">{row.modelcode}</TableCell>
+                      <TableCell align="left">{row.modelcodetext}</TableCell>
+                      <TableCell align="left">{row.brand}</TableCell>
+                      <TableCell align="left">{row.model}</TableCell>
+                      <TableCell align="left">{row.capacity}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
