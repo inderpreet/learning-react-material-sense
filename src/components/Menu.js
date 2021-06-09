@@ -1,25 +1,29 @@
 const Menu = [
   {
     label: "Home",
-    pathname: "/"
+    pathname: "/",
   },
   {
     label: "New Quote wizard",
-    pathname: "/wizard"
+    pathname: "/wizard",
   },
   {
     label: "Quote Dashboard",
-    pathname: "/dashboard"
+    pathname: "/dashboard",
   },
   {
     label: "Start",
-    pathname: "/start"
-  }
+    pathname: "/start",
+  },
+  {
+    label: "Edit Parts",
+    pathname: "/editparts",
+  },
   // {
   //   label: "Signup",
   //   pathname: "/signup"
   // },
-  
+
   // {
   //   label: "Cards",
   //   pathname: "/cards",

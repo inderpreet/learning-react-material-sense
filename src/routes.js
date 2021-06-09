@@ -7,6 +7,7 @@ import Main from "./components/Main";
 import Signup from "./components/Signup";
 import ScrollToTop from "./components/ScrollTop";
 import CreateQuote from "./components/CreateQuote";
+import EditParts from "./components/EditParts";
 
 export default (props) => (
   <HashRouter>
@@ -14,6 +15,7 @@ export default (props) => (
       <Switch>
         <Route exact path="/" component={Main} />
         <Route exact path="/start" component={CreateQuote} />
+        <Route exact path="/editparts" component={EditParts} />
         <Route exact path="/dashboard" component={Dashboard} />
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/wizard" component={Wizard} />
